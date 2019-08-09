@@ -9,6 +9,7 @@
     android:background="@color/colorBase">
 
     <!-- TELA DE SPLASH -->
+    <!-- TROCAR A FONTE -->
 
     <TextView
         android:layout_width="wrap_content"
