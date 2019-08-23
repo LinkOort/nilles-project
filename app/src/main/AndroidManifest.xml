@@ -9,8 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SplashAct" android:theme="@style/SplashTheme"></activity>
-        <activity android:name=".MainActivity" android:theme="@style/MenuAct">
+        <activity android:name=".SoundAct"></activity>
+        <activity android:name=".GpsAct" />
+        <activity android:name=".HomeAct" />
+        <activity
+            android:name=".SplashAct"
+            android:theme="@style/SplashTheme" />
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/MenuAct">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

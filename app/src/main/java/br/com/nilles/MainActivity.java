@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tabBar);
-        ViewPager viewPager = (ViewPager)findViewById(R.id.viewPager);
+        final ViewPager viewPager = (ViewPager)findViewById(R.id.viewPager);
 
         tabLayout.addTab(tabLayout.newTab().setText("GPS"));
         tabLayout.addTab(tabLayout.newTab().setText("XXXX"));
@@ -48,4 +48,4 @@ public class MainActivity extends AppCompatActivity {
     }
 }
 
-}
+
