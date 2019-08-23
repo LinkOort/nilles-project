@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".SplashAct" android:theme="@style/SplashTheme"></activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" android:theme="@style/MenuAct">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
