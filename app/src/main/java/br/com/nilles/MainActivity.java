@@ -18,6 +18,8 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tabBar);
         final ViewPager viewPager = (ViewPager)findViewById(R.id.viewPager);
 
+//alterar o nome das TABS
+        
         tabLayout.addTab(tabLayout.newTab().setText("GPS"));
         tabLayout.addTab(tabLayout.newTab().setText("XXXX"));
         tabLayout.addTab(tabLayout.newTab().setText("XXXX"));
