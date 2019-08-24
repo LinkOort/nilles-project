@@ -15,7 +15,7 @@ public class SoundAct extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        // O layout vai ser inflado a partir daqui
         return inflater.inflate(R.layout.sound_frag, container, false);
     }
 }
