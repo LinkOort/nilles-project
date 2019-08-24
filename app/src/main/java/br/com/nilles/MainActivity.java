@@ -15,17 +15,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TabLayout tabLayout = (TabLayout)findViewById(R.id.tabBar);
-        final ViewPager viewPager = (ViewPager)findViewById(R.id.viewPager);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabBar);
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
 
 //alterar o nome das TABS
-        
+
+        tabLayout.addTab(tabLayout.newTab().setText("Menu"));
         tabLayout.addTab(tabLayout.newTab().setText("GPS"));
-        tabLayout.addTab(tabLayout.newTab().setText("XXXX"));
-        tabLayout.addTab(tabLayout.newTab().setText("XXXX"));
+        tabLayout.addTab(tabLayout.newTab().setText("Track"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        final MyAdapter adapter = new MyAdapter(this,getSupportFragmentManager(), tabLayout.getTabCount());
+        final MyAdapter adapter = new MyAdapter(this, getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));

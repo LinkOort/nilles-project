@@ -7,4 +7,5 @@
     <color name="backMenu">#000</color>
     <color name="textMenuColor">#FFF</color>
     <color name="TabColor">#FFF</color>
+    <color name="menuTextColor">#FFF</color>
 </resources>

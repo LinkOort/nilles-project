@@ -17,6 +17,7 @@ public class MyAdapter extends FragmentPagerAdapter {
     }
 
     // Para os frag
+
     @Override
     public Fragment getItem(int position) {
         switch (position) {
