@@ -1,0 +1,13 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+.cabeçalho{
+	color: #FFF;
+	background: #000;
+
+}
+#headerText{
+	text-align: center;
+	padding: 25px;
+}
