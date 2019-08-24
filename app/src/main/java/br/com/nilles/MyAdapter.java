@@ -16,7 +16,7 @@ public class MyAdapter extends FragmentPagerAdapter {
         this.totalTabs = totalTabs;
     }
 
-    // this is for fragment tabs
+    // Para os frag
     @Override
     public Fragment getItem(int position) {
         switch (position) {
@@ -33,7 +33,7 @@ public class MyAdapter extends FragmentPagerAdapter {
                 return null;
         }
     }
-    // this counts total number of tabs
+    // Número de TABS
     @Override
     public int getCount() {
         return totalTabs;
