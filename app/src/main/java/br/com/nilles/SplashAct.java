@@ -8,6 +8,7 @@ import android.view.WindowManager;
 
 public class SplashAct extends AppCompatActivity {
 
+    // timer da tela de SPLASH
 
     private static int SPLASH_SCREEN_TIME_OUT=2000;
 
@@ -20,6 +21,8 @@ public class SplashAct extends AppCompatActivity {
 
         setContentView(R.layout.splash_layout);
 
+        //
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -29,6 +32,7 @@ public class SplashAct extends AppCompatActivity {
 
                 finish();
             }
-        },SPLASH_SCREEN_TIME_OUT);
+        },// Aqui a variável é chamada
+                SPLASH_SCREEN_TIME_OUT);
     }
 }

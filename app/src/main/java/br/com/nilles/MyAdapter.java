@@ -19,14 +19,17 @@ public class MyAdapter extends FragmentPagerAdapter {
     // Para os frag
 
     @Override
+
+    //switch que pega a posição de cada TAB
+    
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                GpsAct gpsAct = new GpsAct();
-                return gpsAct;
-            case 1:
                 HomeAct homeAct = new HomeAct();
                 return homeAct;
+            case 1:
+                GpsAct gpsAct = new GpsAct();
+                return gpsAct;
             case 2:
                 SoundAct soundAct = new SoundAct();
                 return soundAct;

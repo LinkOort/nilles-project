@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
         tabLayout.addTab(tabLayout.newTab().setText("Menu"));
         tabLayout.addTab(tabLayout.newTab().setText("GPS"));
-        tabLayout.addTab(tabLayout.newTab().setText("Track"));
+        tabLayout.addTab(tabLayout.newTab().setText("Support"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final MyAdapter adapter = new MyAdapter(this, getSupportFragmentManager(), tabLayout.getTabCount());
@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
@@ -46,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
     }
 }
 
