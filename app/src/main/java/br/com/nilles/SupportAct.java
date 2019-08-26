@@ -6,9 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class SoundAct extends Fragment {
+public class SupportAct extends Fragment {
 
-    public SoundAct(){
+    public SupportAct(){
 
     }
 
@@ -16,6 +16,6 @@ public class SoundAct extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // O layout vai ser inflado a partir daqui
-        return inflater.inflate(R.layout.sound_frag, container, false);
+        return inflater.inflate(R.layout.support_frag, container, false);
     }
 }

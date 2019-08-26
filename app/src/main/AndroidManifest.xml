@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SoundAct"></activity>
+        <activity android:name=".SupportAct"></activity>
         <activity android:name=".GpsAct" ></activity>
         <activity android:name=".HomeAct"></activity>
         <activity
