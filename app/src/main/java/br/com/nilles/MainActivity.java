@@ -1,14 +1,20 @@
 package br.com.nilles;
 
+import android.os.Build;
+import android.speech.tts.TextToSpeech;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Toast;
+
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
     TabLayout tabLayout;
     ViewPager viewPager;
+    TextToSpeech voiceMic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +53,37 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        initializeTextToSpeech();
+    }
+
+    private void initializeTextToSpeech() {
+        voiceMic = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(voiceMic.getEngines().size() == 0) {
+                    Toast.makeText(MainActivity.this, "error", Toast.LENGTH_LONG).show();
+                    finish();
+                } else {
+                    voiceMic.setLanguage(Locale.CANADA);
+                    speak("Tela de Menu");
+                }
+            }
+        });
+    }
+
+    private void speak(String message) {
+        if(Build.VERSION.SDK_INT >= 21) {
+            voiceMic.speak(message, TextToSpeech.QUEUE_FLUSH, null, null);
+        } else {
+            voiceMic.speak(message, TextToSpeech.QUEUE_FLUSH, null);
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        voiceMic.shutdown();
     }
 }
 
