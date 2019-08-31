@@ -11,6 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.format.DateUtils;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
+
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -31,7 +33,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
+
+        //todo button deverá deverá ter esta segmentação
+
+        button = (Button) findViewById(R.id.btnVoice);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
+                speechRec.startListening(intent);
+            }
+        });
+
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabBar);
         final ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
