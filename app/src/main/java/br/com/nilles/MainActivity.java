@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
     private TextToSpeech voiceMic;
     private SpeechRecognizer speechRec;
     private Bundle bundle;
-    private Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,13 +41,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
                 intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-                intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
+                intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 2);
                 speechRec.startListening(intent);
             }
         });
 
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabBar);
+        tabLayout = (TabLayout) findViewById(R.id.tabBar);
         final ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
 
         //alterar o nome das TABS
@@ -144,7 +143,6 @@ public class MainActivity extends AppCompatActivity {
     private void finalResults(String command) {
         command = command.toLowerCase();
 
-        //question
 
         if(command.indexOf("what") != -1){
             if(command.indexOf("your name") != -1) {
@@ -154,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
         if (command.indexOf("time") != -1) {
             Date now = new Date();
             String time = DateUtils.formatDateTime(this, now.getTime(),DateUtils.FORMAT_SHOW_TIME);
-            speak("the time is" + time);
+            speak("the time now is" + time);
         }
     }
 
@@ -166,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "error", Toast.LENGTH_LONG).show();
                     finish();
                 } else {
-                    voiceMic.setLanguage(Locale.CANADA);
+                    voiceMic.setLanguage(Locale.US);
                     speak("Tela de Menu");
                 }
             }
