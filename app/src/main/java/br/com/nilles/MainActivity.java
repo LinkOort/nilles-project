@@ -6,6 +6,7 @@ import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.speech.tts.TextToSpeech;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -34,12 +35,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //todo button deverá deverá ter esta segmentação
 
-        button = (Button) findViewById(R.id.btnVoice);
-        button.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
                 intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
                 intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onResults(Bundle result) {
+                public void onResults(Bundle bundle) {
                     //mantemos o foco aqui neste método
                     List<String> results = bundle.getStringArrayList(
                             SpeechRecognizer.RESULTS_RECOGNITION
@@ -148,13 +148,13 @@ public class MainActivity extends AppCompatActivity {
 
         if(command.indexOf("what") != -1){
             if(command.indexOf("your name") != -1) {
-                speak("My name is Koku.");
+                speak("my name is koku.");
             }
         }
-        if (command.indexOf("Time") != -1) {
+        if (command.indexOf("time") != -1) {
             Date now = new Date();
             String time = DateUtils.formatDateTime(this, now.getTime(),DateUtils.FORMAT_SHOW_TIME);
-            speak("The time is" + time);
+            speak("the time is" + time);
         }
     }
 
