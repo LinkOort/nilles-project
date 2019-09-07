@@ -5,9 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".GpsAct">
-    <TextView
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="GPS" />
+        android:layout_height="400dp"
+        android:layout_marginTop="100dp"
+        tools:context=".MapsAct" />
 </FrameLayout>
