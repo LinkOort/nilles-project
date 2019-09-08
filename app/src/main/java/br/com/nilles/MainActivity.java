@@ -1,6 +1,8 @@
 package br.com.nilles;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
@@ -8,12 +10,13 @@ import android.speech.SpeechRecognizer;
 import android.speech.tts.TextToSpeech;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.format.DateUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.Date;
@@ -22,9 +25,8 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-
+    private static final int REQUEST_MICROPHONE = 360;
     private TabLayout tabLayout;
-    private ViewPager viewPager;
     private TextToSpeech voiceMic;
     private SpeechRecognizer speechRec;
     private Bundle bundle;
@@ -34,6 +36,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        //pedindo permissão para o ativar o audio.
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
+                != PackageManager.PERMISSION_GRANTED) {
+            
+            ActivityCompat.requestPermissions(MainActivity.this,
+                    new String[]{Manifest.permission.RECORD_AUDIO},
+                    REQUEST_MICROPHONE);
+        }
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -146,13 +157,27 @@ public class MainActivity extends AppCompatActivity {
 
         if(command.indexOf("what") != -1){
             if(command.indexOf("your name") != -1) {
-                speak("my name is koku.");
+                speak("My name is Nilles.");
             }
         }
+        if(command.indexOf("hello") != -1){
+                speak("Hi, I'm Nilles, your new voice assistent. How can I help you?");
+        }
+
         if (command.indexOf("time") != -1) {
             Date now = new Date();
             String time = DateUtils.formatDateTime(this, now.getTime(),DateUtils.FORMAT_SHOW_TIME);
-            speak("the time now is" + time);
+            speak("agora são" + time);
+        }
+        if (command.indexOf("maps") != -1) {
+            Intent maps = new Intent(this, GpsAct.class);
+            speak("Tela de GPS" );
+            startActivity(maps);
+        }
+        else if (command.indexOf("support") != -1) {
+            Intent support = new Intent(this, SupportAct.class);
+            speak("Tela de Suporte" );
+            startActivity(support);
         }
     }
 
@@ -165,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
                     finish();
                 } else {
                     voiceMic.setLanguage(Locale.US);
-                    speak("Tela de Menu");
+                    speak("Hi! Welcome, press the voice button and say 'Hello' to start.");
                 }
             }
         });
@@ -184,6 +209,5 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
         voiceMic.shutdown();
     }
+
 }
-
-

@@ -5,11 +5,11 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 public class SplashAct extends AppCompatActivity {
 
     // timer da tela de SPLASH
-
     private static int SPLASH_SCREEN_TIME_OUT=2000;
 
     @Override
@@ -20,8 +20,6 @@ public class SplashAct extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.splash_layout);
-
-        //
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -34,5 +32,10 @@ public class SplashAct extends AppCompatActivity {
             }
         },// Aqui a variável é chamada
                 SPLASH_SCREEN_TIME_OUT);
+    }
+
+    @Override
+    public void onBackPressed() {
+        //Back Button foi desabilitado para o APP não ser finalizado na tela de Splash
     }
 }

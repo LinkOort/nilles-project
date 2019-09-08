@@ -28,9 +28,9 @@ public class MapsAct extends FragmentActivity implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
         LatLng brazil = new LatLng(-23, -46);
         mMap.addMarker(new MarkerOptions().position(brazil).title("São Paulo"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(brazil));
+
     }
 }
