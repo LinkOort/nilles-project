@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private TextToSpeech voiceMic;
     private SpeechRecognizer speechRec;
     private Bundle bundle;
+    private Object FloatingActionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
@@ -154,7 +156,6 @@ public class MainActivity extends AppCompatActivity {
     private void finalResults(String command) {
         command = command.toLowerCase();
 
-
         if(command.indexOf("what") != -1){
             if(command.indexOf("your name") != -1) {
                 speak("My name is Nilles.");
@@ -171,13 +172,12 @@ public class MainActivity extends AppCompatActivity {
         }
         if (command.indexOf("maps") != -1) {
             Intent maps = new Intent(this, GpsAct.class);
+            maps.putExtra("FRAGMENT_ID", 1);
             speak("Tela de GPS" );
             startActivity(maps);
         }
         else if (command.indexOf("support") != -1) {
-            Intent support = new Intent(this, SupportAct.class);
-            speak("Tela de Suporte" );
-            startActivity(support);
+
         }
     }
 
