@@ -170,15 +170,6 @@ public class MainActivity extends AppCompatActivity {
             String time = DateUtils.formatDateTime(this, now.getTime(),DateUtils.FORMAT_SHOW_TIME);
             speak("agora são" + time);
         }
-        if (command.indexOf("maps") != -1) {
-            Intent maps = new Intent(this, GpsAct.class);
-            maps.putExtra("FRAGMENT_ID", 1);
-            speak("Tela de GPS" );
-            startActivity(maps);
-        }
-        else if (command.indexOf("support") != -1) {
-
-        }
     }
 
     private void initializeTextToSpeech() {

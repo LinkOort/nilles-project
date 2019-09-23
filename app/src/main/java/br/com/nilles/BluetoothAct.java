@@ -13,15 +13,5 @@ public class BluetoothAct extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.support_frag);
 
-        Button button = (Button)findViewById(R.id.btnBluetooth);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-
-           //just a test
-
-            public void onClick(View v) {
-                finish();
-            }
-        });
     }
 }
