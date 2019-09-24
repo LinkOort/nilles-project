@@ -22,6 +22,7 @@ public class SupportAct extends Fragment implements View.OnClickListener {
         switch (v.getId()){
             case R.id.btnBluetooth:
                 getActivity().finish();
+                break;
         }
     }
 }

@@ -8,10 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;;
 
 public class HomeAct extends Fragment {
-
-    public HomeAct(){
-
-    }
+    
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // O layout vai ser inflado a partir daqui
