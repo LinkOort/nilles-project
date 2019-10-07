@@ -1,8 +1,10 @@
 package br.com.nilles;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
@@ -22,7 +24,21 @@ import com.karumi.dexter.listener.single.PermissionListener;
 public class PermissionAct extends AppCompatActivity {
 
     private Button btnAccept;
+    String prevStarted = "prevStarted";
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences sharedpreferences = getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE);
+        if (!sharedpreferences.getBoolean(prevStarted, false)) {
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putBoolean(prevStarted, Boolean.TRUE);
+            editor.apply();
+        } else {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +55,9 @@ public class PermissionAct extends AppCompatActivity {
                         .withListener(new PermissionListener() {
                             @Override
                             public void onPermissionGranted(PermissionGrantedResponse response) {
-                                startActivity(new Intent(PermissionAct.this, MainActivity.class));
+                                Intent intent =  new Intent(PermissionAct.this, MainActivity.class);
+                                startActivity(intent);
                                 finish();
-                                return;
                             }
 
                             @Override
