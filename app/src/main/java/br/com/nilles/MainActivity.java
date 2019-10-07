@@ -8,6 +8,7 @@ import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.speech.tts.TextToSpeech;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
@@ -131,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
 
                 }
 
+                @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
                 @Override
                 public void onResults(Bundle bundle) {
                     //mantemos o foco aqui neste método
@@ -153,6 +155,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     private void finalResults(String command) {
         command = command.toLowerCase();
 
@@ -168,7 +171,10 @@ public class MainActivity extends AppCompatActivity {
         if (command.indexOf("time") != -1) {
             Date now = new Date();
             String time = DateUtils.formatDateTime(this, now.getTime(),DateUtils.FORMAT_SHOW_TIME);
-            speak("agora são" + time);
+            speak("The time now is" + time);
+        }
+        if (command.indexOf("exit") != -1) {
+           finishAffinity();
         }
     }
 
