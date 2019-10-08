@@ -66,9 +66,9 @@ public class MainActivity extends AppCompatActivity {
 
         //alterar o nome das TABS
 
-        tabLayout.addTab(tabLayout.newTab().setText("Menu"));
-        tabLayout.addTab(tabLayout.newTab().setText("GPS"));
-        tabLayout.addTab(tabLayout.newTab().setText("Support"));
+        tabLayout.addTab(tabLayout.newTab().setText("Menu").setTag("tab1"));
+        tabLayout.addTab(tabLayout.newTab().setText("GPS").setTag("tab2"));
+        tabLayout.addTab(tabLayout.newTab().setText("Support").setTag("tab3"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final MyAdapter adapter = new MyAdapter(this, getSupportFragmentManager(), tabLayout.getTabCount());
@@ -176,6 +176,7 @@ public class MainActivity extends AppCompatActivity {
         if (command.indexOf("exit") != -1) {
            finishAffinity();
         }
+        
     }
 
     private void initializeTextToSpeech() {

@@ -8,21 +8,35 @@
     android:orientation="vertical"
     >
 
+    <ImageView
+        android:layout_width="122dp"
+        android:layout_height="154dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="60dp"
+        android:src="@drawable/ic_android_black"></ImageView>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/permission_text"
-        android:layout_marginTop="150dp"
-        android:textSize="25dp"
-        android:textAlignment="center">
+        android:text="Tela de Permissão"
+        android:layout_gravity="center"
+        android:textSize="25dp">
     </TextView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:text="@string/permission_text"
+        android:textAlignment="center"
+        android:textSize="25dp"></TextView>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Aceitar"
         android:layout_gravity="center"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="50dp"
         android:id="@+id/accept"></Button>
 
 </LinearLayout>
