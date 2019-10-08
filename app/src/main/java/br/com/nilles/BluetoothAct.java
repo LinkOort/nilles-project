@@ -8,6 +8,8 @@ import android.widget.Button;
 
 public class BluetoothAct extends AppCompatActivity {
 
+    Button btnBlue;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

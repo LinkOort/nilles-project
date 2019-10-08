@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.os.Handler;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
@@ -24,7 +25,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+
+
 public class MainActivity extends AppCompatActivity {
+
+    private boolean doubleBackToExitPressedOnce;
+    private Handler mHandler = new Handler();
 
     private static final int REQUEST_MICROPHONE = 360;
     private TabLayout tabLayout;
@@ -208,4 +214,31 @@ public class MainActivity extends AppCompatActivity {
         voiceMic.shutdown();
     }
 
+    private final Runnable mRunnable = new Runnable() {
+        @Override
+        public void run() {
+            doubleBackToExitPressedOnce = false;
+        }
+    };
+
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        if (mHandler != null) { mHandler.removeCallbacks(mRunnable); }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Pressione Duas Vezes para sair da aplicação", Toast.LENGTH_SHORT).show();
+        mHandler.postDelayed(mRunnable, 2000);
+    }
 }
+
+
