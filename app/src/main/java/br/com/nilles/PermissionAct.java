@@ -16,14 +16,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
-
 import java.util.Locale;
 
 public class PermissionAct extends AppCompatActivity {
@@ -51,7 +49,6 @@ public class PermissionAct extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.permission_layout);
-
 
         btnAccept = (Button)findViewById(R.id.accept);
         btnAccept.setOnClickListener(new View.OnClickListener() {
@@ -97,6 +94,8 @@ public class PermissionAct extends AppCompatActivity {
             }
         });
     }
+
+
     // devo fazer algo para que o audio fosse executado apneas uma vez
     /*private void initializeTextToSpeech() {
         voiceMic = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
@@ -119,4 +118,6 @@ public class PermissionAct extends AppCompatActivity {
             voiceMic.speak(message, TextToSpeech.QUEUE_FLUSH, null);
         }
     }*/
+
+
 }

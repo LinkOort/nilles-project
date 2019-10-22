@@ -25,13 +25,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-
-
 public class MainActivity extends AppCompatActivity {
 
     private boolean doubleBackToExitPressedOnce;
     private Handler mHandler = new Handler();
-
     private static final int REQUEST_MICROPHONE = 360;
     private TabLayout tabLayout;
     private TextToSpeech voiceMic;
@@ -43,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         //pedindo permissão para o ativar o audio.
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
@@ -65,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
                 speechRec.startListening(intent);
             }
         });
-
 
         tabLayout = (TabLayout) findViewById(R.id.tabBar);
         final ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
@@ -105,7 +100,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void initializeSpeechReconizer() {
         if (SpeechRecognizer.isRecognitionAvailable(this)){
-            //aqui criamos o método de reconhecimento de voz
             speechRec = SpeechRecognizer.createSpeechRecognizer(this);
             speechRec.setRecognitionListener(new RecognitionListener() {
                 @Override
@@ -173,7 +167,6 @@ public class MainActivity extends AppCompatActivity {
         if(command.indexOf("hello") != -1){
                 speak("Hi, I'm Nilles, your new voice assistent. How can I help you?");
         }
-
         if (command.indexOf("time") != -1) {
             Date now = new Date();
             String time = DateUtils.formatDateTime(this, now.getTime(),DateUtils.FORMAT_SHOW_TIME);
@@ -182,7 +175,6 @@ public class MainActivity extends AppCompatActivity {
         if (command.indexOf("exit") != -1) {
            finishAffinity();
         }
-        
     }
 
     private void initializeTextToSpeech() {
@@ -222,8 +214,7 @@ public class MainActivity extends AppCompatActivity {
     };
 
     @Override
-    protected void onDestroy()
-    {
+    protected void onDestroy() {
         super.onDestroy();
         if (mHandler != null) { mHandler.removeCallbacks(mRunnable); }
     }
@@ -240,5 +231,3 @@ public class MainActivity extends AppCompatActivity {
         mHandler.postDelayed(mRunnable, 2000);
     }
 }
-
-

@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="br.com.nilles">
-
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="br.com.nilles">
+        <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+        <uses-permission android:name="android.permission.BLUETOOTH"/>
+        <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+        <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -14,10 +11,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PermissionAct"
-            android:theme="@style/MenuAct">
+        <activity
+            android:name=".PermissionAct"
+            android:theme="@style/MenuAct"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".BluetoothAct" />
+        <activity
+            android:name=".BluetoothAct"
+            android:screenOrientation="portrait"/>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -26,25 +27,30 @@
              sign the APK for publishing.
              You can define the keys for the debug and release targets in src/debug/ and src/release/.
         -->
-        <activity android:name=".SupportAct" />
-        <activity android:name=".GpsAct" />
-        <activity android:name=".HomeAct" />
+        <activity
+            android:name=".SupportAct"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".GpsAct"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".HomeAct"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".SplashAct"
-            android:theme="@style/SplashTheme">
+            android:theme="@style/SplashTheme"
+            android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
             android:name=".MainActivity"
-            android:theme="@style/MenuAct" />
-
+            android:theme="@style/MenuAct"
+            android:screenOrientation="portrait"/>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:value="@string/google_maps_key"/>
     </application>
-
 </manifest>
