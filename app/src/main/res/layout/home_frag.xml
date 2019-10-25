@@ -11,6 +11,21 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="Home"/>
+        android:text="Press the central button to follow the instructions how to use the application"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+    <Button
+        android:id="@+id/centralBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Press"
+        android:layout_marginTop="80dp"
+        />
+    </LinearLayout>
+
 
 </FrameLayout>

@@ -19,6 +19,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.format.DateUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.Date;
@@ -35,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
     private SpeechRecognizer speechRec;
     private Bundle bundle;
     private Object FloatingActionButton;
+    private Button btnCentral;
+    private static int timer = 2000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +62,22 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
                 intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 2);
                 speechRec.startListening(intent);
+            }
+        });
+
+        btnCentral = (Button)findViewById(R.id.centralBtn);
+        btnCentral.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        speak("Testing");
+                    }
+                }, 3000);
+                speak("bbbbbb");
             }
         });
 
@@ -186,7 +205,7 @@ public class MainActivity extends AppCompatActivity {
                     finish();
                 } else {
                     voiceMic.setLanguage(Locale.US);
-                    speak("Hi! Welcome, press the voice button and say 'Hello' to start.");
+                    speak("Hi! Welcome, press the voice button and say 'Hello' to start. Press the central button to follow the intructions");
                 }
             }
         });
@@ -219,15 +238,16 @@ public class MainActivity extends AppCompatActivity {
         if (mHandler != null) { mHandler.removeCallbacks(mRunnable); }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
-            super.onBackPressed();
-            return;
+            finishAffinity();
         }
 
         this.doubleBackToExitPressedOnce = true;
         Toast.makeText(this, "Pressione Duas Vezes para sair da aplicação", Toast.LENGTH_SHORT).show();
         mHandler.postDelayed(mRunnable, 2000);
     }
+
 }
