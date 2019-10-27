@@ -37,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
     private Bundle bundle;
     private Object FloatingActionButton;
     private Button btnCentral;
-    private static int timer = 2000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
+
                 Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
                 intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
                 intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 2);
@@ -65,21 +65,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnCentral = (Button)findViewById(R.id.centralBtn);
-        btnCentral.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                final Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        speak("Testing");
-                    }
-                }, 3000);
-                speak("bbbbbb");
-            }
-        });
 
         tabLayout = (TabLayout) findViewById(R.id.tabBar);
         final ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
@@ -113,8 +98,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        initializeTextToSpeech();
+        //initializeTextToSpeech();
         initializeSpeechReconizer();
+    }
+
+    @Override
+    protected void onResume() {
+        initializeSpeechReconizer();
+        //initializeTextToSpeech();
+        super.onResume();
     }
 
     private void initializeSpeechReconizer() {
@@ -176,40 +168,55 @@ public class MainActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     private void finalResults(String command) {
+
+        Locale locale = new Locale("pt", "BR");
+
         command = command.toLowerCase();
 
         if(command.indexOf("what") != -1){
             if(command.indexOf("your name") != -1) {
-                speak("My name is Nilles.");
+                speak("Meu nome é Nilees.");
             }
         }
-        if(command.indexOf("hello") != -1){
-                speak("Hi, I'm Nilles, your new voice assistent. How can I help you?");
+        if(command.indexOf("Oi") != -1){
+                speak("Eu sou Nilees, sua nova assistente de voz, como posso lhe ajudar?");
         }
-        if (command.indexOf("time") != -1) {
+        if (command.indexOf("horas") != -1) {
             Date now = new Date();
             String time = DateUtils.formatDateTime(this, now.getTime(),DateUtils.FORMAT_SHOW_TIME);
-            speak("The time now is" + time);
+            speak("Agora são exatas:" + time);
         }
         if (command.indexOf("exit") != -1) {
            finishAffinity();
         }
     }
 
+    /* comentado para aeeumar
     private void initializeTextToSpeech() {
         voiceMic = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
+
+                Locale locale = new Locale("pt", "BR");
+
                 if(voiceMic.getEngines().size() == 0) {
                     Toast.makeText(MainActivity.this, "error", Toast.LENGTH_LONG).show();
                     finish();
                 } else {
-                    voiceMic.setLanguage(Locale.US);
-                    speak("Hi! Welcome, press the voice button and say 'Hello' to start. Press the central button to follow the intructions");
+                    voiceMic.setLanguage(locale);
+                    speak("Olá, meu nome é Nilees, sua nova assistente de voz. Diga Olá");
                 }
+
+                    btnCentral = (Button)findViewById(R.id.centralBtn);
+                    btnCentral.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        speak("Olá, meu nome é Nilees, sua nova assistente de voz. Diga Olá");
+                    }
+                });
             }
         });
-    }
+    }*/
 
     private void speak(String message) {
         if(Build.VERSION.SDK_INT >= 21) {

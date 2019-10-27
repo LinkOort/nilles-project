@@ -14,6 +14,10 @@ public class SplashAct extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
+
+
         super.onCreate(savedInstanceState);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -25,9 +29,7 @@ public class SplashAct extends AppCompatActivity {
             @Override
             public void run() {
                 Intent intent = new Intent(SplashAct.this, PermissionAct.class);
-
                 startActivity(intent);
-
                 finish();
             }
         },// Aqui a variável é chamada
