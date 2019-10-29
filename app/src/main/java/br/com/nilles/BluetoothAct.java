@@ -16,4 +16,5 @@ public class BluetoothAct extends AppCompatActivity {
         setContentView(R.layout.support_frag);
 
     }
+
 }

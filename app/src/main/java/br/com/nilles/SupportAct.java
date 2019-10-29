@@ -1,7 +1,9 @@
 package br.com.nilles;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,11 +28,12 @@ public class SupportAct extends Fragment implements View.OnClickListener {
         return support;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnBluetooth:
-                getActivity().finish();
+                getActivity().finishAffinity();
                 break;
         }
     }
@@ -43,9 +46,7 @@ public class SupportAct extends Fragment implements View.OnClickListener {
                 Locale locale = new Locale("pt", "BR");
                 voiceMic.setLanguage(locale);
                 speak("Tela de Suporte");
-
             }
-
         });
     }
 

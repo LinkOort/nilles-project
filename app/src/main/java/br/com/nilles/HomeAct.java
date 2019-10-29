@@ -13,7 +13,6 @@ public class HomeAct extends Fragment {
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // O layout vai ser inflado a partir daqui
         initializeTextToSpeech();
         return inflater.inflate(R.layout.home_frag, container, false);
 

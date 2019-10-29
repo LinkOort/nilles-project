@@ -35,15 +35,14 @@ public class MainActivity extends AppCompatActivity {
     private TextToSpeech voiceMic;
     private SpeechRecognizer speechRec;
     private Bundle bundle;
-    private Object FloatingActionButton;
     private Button btnCentral;
+    private Locale locale;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //pedindo permissão para o ativar o audio.
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
                 != PackageManager.PERMISSION_GRANTED) {
             
@@ -65,15 +64,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-        tabLayout = (TabLayout) findViewById(R.id.tabBar);
+        tabLayout = (TabLayout)findViewById(R.id.tabBar);
         final ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
-
-        //alterar o nome das TABS
 
         tabLayout.addTab(tabLayout.newTab().setText("Menu").setTag("tab1"));
         tabLayout.addTab(tabLayout.newTab().setText("GPS").setTag("tab2"));
-        tabLayout.addTab(tabLayout.newTab().setText("Support").setTag("tab3"));
+        tabLayout.addTab(tabLayout.newTab().setText("Suporte").setTag("tab3"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final MyAdapter adapter = new MyAdapter(this, getSupportFragmentManager(), tabLayout.getTabCount());
@@ -98,55 +94,48 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //initializeTextToSpeech();
-        initializeSpeechReconizer();
+        initializeTextToSpeech();
+        initializeSpeechRecognizer();
     }
 
     @Override
     protected void onResume() {
-        initializeSpeechReconizer();
-        //initializeTextToSpeech();
+        initializeSpeechRecognizer();
+        initializeTextToSpeech();
         super.onResume();
     }
 
-    private void initializeSpeechReconizer() {
+    private void initializeSpeechRecognizer() {
         if (SpeechRecognizer.isRecognitionAvailable(this)){
             speechRec = SpeechRecognizer.createSpeechRecognizer(this);
             speechRec.setRecognitionListener(new RecognitionListener() {
                 @Override
                 public void onReadyForSpeech(Bundle params) {
-
                 }
 
                 @Override
                 public void onBeginningOfSpeech() {
-
                 }
 
                 @Override
                 public void onRmsChanged(float rmsdB) {
-
                 }
 
                 @Override
                 public void onBufferReceived(byte[] buffer) {
-
                 }
 
                 @Override
                 public void onEndOfSpeech() {
-
                 }
 
                 @Override
                 public void onError(int error) {
-
                 }
 
                 @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
                 @Override
                 public void onResults(Bundle bundle) {
-                    //mantemos o foco aqui neste método
                     List<String> results = bundle.getStringArrayList(
                             SpeechRecognizer.RESULTS_RECOGNITION
                     );
@@ -155,12 +144,10 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onPartialResults(Bundle partialResults) {
-
                 }
 
                 @Override
                 public void onEvent(int eventType, Bundle params) {
-
                 }
             });
         }
@@ -169,8 +156,7 @@ public class MainActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     private void finalResults(String command) {
 
-        Locale locale = new Locale("pt", "BR");
-
+        locale = new Locale("pt", "BR");
         command = command.toLowerCase();
 
         if(command.indexOf("what") != -1){
@@ -191,32 +177,26 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /* comentado para aeeumar
     private void initializeTextToSpeech() {
         voiceMic = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
 
                 Locale locale = new Locale("pt", "BR");
-
-                if(voiceMic.getEngines().size() == 0) {
-                    Toast.makeText(MainActivity.this, "error", Toast.LENGTH_LONG).show();
-                    finish();
-                } else {
                     voiceMic.setLanguage(locale);
-                    speak("Olá, meu nome é Nilees, sua nova assistente de voz. Diga Olá");
-                }
+                    speak("Olá, meu nome é Nilees, sua nova assistente de voz. Diga Olá ou aperte o botão central para ouvir as instruções");
 
                     btnCentral = (Button)findViewById(R.id.centralBtn);
                     btnCentral.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        speak("Olá, meu nome é Nilees, sua nova assistente de voz. Diga Olá");
+                        speak("Olá ! Meu nome é Nilles, estou aqui para mostar como a aplicação funciona, aqui você está na tela de menu");
+
                     }
                 });
             }
         });
-    }*/
+    }
 
     private void speak(String message) {
         if(Build.VERSION.SDK_INT >= 21) {
