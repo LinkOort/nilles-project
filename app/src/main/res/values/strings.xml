@@ -2,4 +2,5 @@
     <string name="app_name">Nilles</string>
     <string name="title_activity_maps">Map</string>
     <string name="permission_text">Deseja o que aplicativo tenha acesso as seguintes permissões?</string>
+    <string name="btn_central_info">Olá, meu nome é Nilees, sua nova assistente de voz. Pressione o botãi inferior direito e diga Oi para mais informações. Pressione o Botão central para ouvir as instruções</string>
 </resources>

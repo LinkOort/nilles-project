@@ -159,15 +159,13 @@ public class MainActivity extends AppCompatActivity {
         locale = new Locale("pt", "BR");
         command = command.toLowerCase();
 
-        if(command.indexOf("what") != -1){
-            if(command.indexOf("your name") != -1) {
+        if(command.indexOf("your name") != -1) {
                 speak("Meu nome é Nilees.");
-            }
         }
-        if(command.indexOf("hello") != -1){
+        if(command.indexOf("hello") != 5){
                 speak("Eu sou Nilees, sua nova assistente de voz, como posso lhe ajudar?");
         }
-        if (command.indexOf("time") != -1) {
+        if (command.indexOf("time is it") != -1) {
             Date now = new Date();
             String time = DateUtils.formatDateTime(this, now.getTime(),DateUtils.FORMAT_SHOW_TIME);
             speak("Agora são exatas:" + time);
@@ -184,14 +182,13 @@ public class MainActivity extends AppCompatActivity {
 
                 Locale locale = new Locale("pt", "BR");
                     voiceMic.setLanguage(locale);
-                    speak("Olá, meu nome é Nilees, sua nova assistente de voz. Diga Olá ou aperte o botão central para ouvir as instruções");
+                    speak("Olá, meu nome é Nilees, sua nova assistente de voz. Pressione o botãi inferior direito e diga Oi para mais informações. Pressione o Botão central para ouvir as instruções");
 
                     btnCentral = (Button)findViewById(R.id.centralBtn);
                     btnCentral.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        speak("Olá ! Meu nome é Nilles, estou aqui para mostar como a aplicação funciona, aqui você está na tela de menu");
-
+                        speak("Olá ! Meu nome é Nilles, estou aqui para mostar como a aplicação funciona, aqui você está na tela de menu.");
                     }
                 });
             }
