@@ -13,5 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="400dp"
         android:layout_marginTop="50dp"
-        tools:context=".GpsAct" />
+        tools:context=".GpsAct"
+        map:cameraTargetLat="-23.5507766"
+        map:cameraTargetLng="-46.6342632"
+        map:cameraZoom="13"/>
 </FrameLayout>

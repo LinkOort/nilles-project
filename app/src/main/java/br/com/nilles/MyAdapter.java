@@ -15,11 +15,7 @@ public class MyAdapter extends FragmentPagerAdapter {
         myContext = context;
         this.totalTabs = totalTabs;
     }
-
-    // Para os frag
-
     @Override
-
     //switch que pega a posição de cada TAB
 
     public Fragment getItem(int position) {
@@ -37,7 +33,6 @@ public class MyAdapter extends FragmentPagerAdapter {
                 return null;
         }
     }
-    // Número de TABS
     @Override
     public int getCount() {
         return totalTabs;

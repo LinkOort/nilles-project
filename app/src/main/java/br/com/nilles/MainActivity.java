@@ -164,10 +164,10 @@ public class MainActivity extends AppCompatActivity {
                 speak("Meu nome é Nilees.");
             }
         }
-        if(command.indexOf("Oi") != -1){
+        if(command.indexOf("hello") != -1){
                 speak("Eu sou Nilees, sua nova assistente de voz, como posso lhe ajudar?");
         }
-        if (command.indexOf("horas") != -1) {
+        if (command.indexOf("time") != -1) {
             Date now = new Date();
             String time = DateUtils.formatDateTime(this, now.getTime(),DateUtils.FORMAT_SHOW_TIME);
             speak("Agora são exatas:" + time);

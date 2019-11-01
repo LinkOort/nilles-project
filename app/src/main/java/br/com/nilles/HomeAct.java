@@ -13,11 +13,11 @@ public class HomeAct extends Fragment {
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        initializeTextToSpeech();
+        //initializeTextToSpeech();
         return inflater.inflate(R.layout.home_frag, container, false);
 
     }
-    private void initializeTextToSpeech() {
+   /* private void initializeTextToSpeech() {
         voiceMic = new TextToSpeech(getActivity(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
@@ -32,5 +32,5 @@ public class HomeAct extends Fragment {
     }
     private void speak(String speak) {
         voiceMic.speak(speak, TextToSpeech.QUEUE_FLUSH, null);
-    }
+    }*/
 }

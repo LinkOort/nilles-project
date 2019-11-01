@@ -24,7 +24,7 @@ public class SupportAct extends Fragment implements View.OnClickListener {
         final View support = inflater.inflate(R.layout.support_frag, container, false);
         Button button = (Button) support.findViewById(R.id.btnBluetooth);
         button.setOnClickListener(this);
-        initializeTexToSpeech();
+        //initializeTexToSpeech();
         return support;
     }
 
@@ -38,7 +38,7 @@ public class SupportAct extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void initializeTexToSpeech() {
+    /*private void initializeTexToSpeech() {
         voiceMic = new TextToSpeech(getActivity(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
@@ -48,11 +48,11 @@ public class SupportAct extends Fragment implements View.OnClickListener {
                 speak("Tela de Suporte");
             }
         });
-    }
+    }*/
 
-    private void speak(String speak) {
+    /*private void speak(String speak) {
         voiceMic.speak(speak, TextToSpeech.QUEUE_FLUSH, null);
-    }
+    }*/
 
 }
 
