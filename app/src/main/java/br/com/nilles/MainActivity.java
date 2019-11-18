@@ -3,6 +3,7 @@ package br.com.nilles;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.speech.RecognitionListener;
@@ -210,6 +211,12 @@ public class MainActivity extends AppCompatActivity {
         if (command.indexOf("tempo") != -1) {
             speak("O tempo agora");
         }
+        /*if (command.indexOf("Restaurante") != -1) {
+                Uri gmmIntentUri = Uri.parse("geo:0,0?q=restaurants");
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                mapIntent.setPackage("com.google.android.apps.maps");
+                startActivity(mapIntent);
+        }*/
     }
 
     private void initializeTextToSpeech() {
@@ -225,7 +232,7 @@ public class MainActivity extends AppCompatActivity {
                 btnCentral.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        speak("Olá ! Meu nome é Nilles, estou aqui para mostar como a aplicação funciona, aqui você está na tela de menu.");
+                        speak("Olá ! Meu nome é Nilles, estou aqui para mostar como a aplicação funciona, aqui você está na tela de menu. Deslize o seu dedo a sua esquerda para acessar a tela de GPS");
                     }
                 });
             }
@@ -247,7 +254,6 @@ public class MainActivity extends AppCompatActivity {
             doubleBackToExitPressedOnce = false;
         }
     };
-
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
