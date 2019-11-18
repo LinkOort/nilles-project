@@ -37,4 +37,5 @@ public class GpsAct extends Fragment implements OnMapReadyCallback {
         mMap.moveCamera(CameraUpdateFactory.newLatLng(brazil));
 
     }
+
 }

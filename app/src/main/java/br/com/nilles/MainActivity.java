@@ -30,41 +30,52 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean doubleBackToExitPressedOnce;
     private Handler mHandler = new Handler();
-    private static final int REQUEST_MICROPHONE = 360;
+    private static final int REQUEST_MICROPHONE = 100;
     private TabLayout tabLayout;
     private TextToSpeech voiceMic;
     private SpeechRecognizer speechRec;
     private Bundle bundle;
     private Button btnCentral;
     private Locale locale;
+    private Locale localel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        localel = new Locale("pt", "BR");
+
+
+        //peço permissão para que o microfone seja utilizado
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
                 != PackageManager.PERMISSION_GRANTED) {
-            
+
             ActivityCompat.requestPermissions(MainActivity.this,
                     new String[]{Manifest.permission.RECORD_AUDIO},
                     REQUEST_MICROPHONE);
         }
 
+
+        //instancio o FAB para que ele seja utilizado
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
 
+                //Aqui é colocado o intente para que seja reconhecido a ação de voz
                 Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
                 intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
                 intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 2);
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, localel);
                 speechRec.startListening(intent);
             }
         });
 
-        tabLayout = (TabLayout)findViewById(R.id.tabBar);
+
+        //aqui é onde as TABS são feitas
+        tabLayout = (TabLayout) findViewById(R.id.tabBar);
         final ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
 
         tabLayout.addTab(tabLayout.newTab().setText("Menu").setTag("tab1"));
@@ -98,6 +109,14 @@ public class MainActivity extends AppCompatActivity {
         initializeSpeechRecognizer();
     }
 
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        voiceMic.shutdown();
+    }
+
+    //quando a aplicação é "minimizada" com este método as ações de inicializar o reconhecimento de voz e texto serão reativadas
     @Override
     protected void onResume() {
         initializeSpeechRecognizer();
@@ -105,8 +124,19 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mHandler != null) {
+            mHandler.removeCallbacks(mRunnable);
+        }
+    }
+
+
+    //aqui o método de reconhecimento da fala (pelo botão) é criado
     private void initializeSpeechRecognizer() {
-        if (SpeechRecognizer.isRecognitionAvailable(this)){
+        //aqui é confirmado se o microfone está disponível para que o reconhecimento comece
+        if (SpeechRecognizer.isRecognitionAvailable(this)) {
             speechRec = SpeechRecognizer.createSpeechRecognizer(this);
             speechRec.setRecognitionListener(new RecognitionListener() {
                 @Override
@@ -133,12 +163,14 @@ public class MainActivity extends AppCompatActivity {
                 public void onError(int error) {
                 }
 
+                //aqui é onde irémos pegar o resultado do que foi falado pelo usuário
                 @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
                 @Override
                 public void onResults(Bundle bundle) {
                     List<String> results = bundle.getStringArrayList(
                             SpeechRecognizer.RESULTS_RECOGNITION
                     );
+                    //metodo finalResults é chamado aqui
                     finalResults(results.get(0));
                 }
 
@@ -156,22 +188,27 @@ public class MainActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     private void finalResults(String command) {
 
-        locale = new Locale("pt", "BR");
-        command = command.toLowerCase();
+        //aqui no método é instanciado algumas funções de voz da aplicação (pretendo aprimorar depois e trocar os "if" por switch case)
 
-        if(command.indexOf("your name") != -1) {
-                speak("Meu nome é Nilees.");
+        locale = new Locale("pt", "BR");
+        command = command.toLowerCase(localel);
+
+        if (command.indexOf("oi") != -1) {
+            speak("Meu nome é Nilees.");
         }
-        if(command.indexOf("hello") != 5){
-                speak("Eu sou Nilees, sua nova assistente de voz, como posso lhe ajudar?");
+        if (command.indexOf("olá") != -1) {
+            speak("Eu sou Nilees, sua nova assistente de voz, como posso lhe ajudar?");
         }
-        if (command.indexOf("time is it") != -1) {
+        if (command.indexOf("que horas são") != -1) {
             Date now = new Date();
-            String time = DateUtils.formatDateTime(this, now.getTime(),DateUtils.FORMAT_SHOW_TIME);
+            String time = DateUtils.formatDateTime(this, now.getTime(), DateUtils.FORMAT_SHOW_TIME);
             speak("Agora são exatas:" + time);
         }
-        if (command.indexOf("exit") != -1) {
-           finishAffinity();
+        if (command.indexOf("sair") != -1) {
+            finishAffinity();
+        }
+        if (command.indexOf("tempo") != -1) {
+            speak("O tempo agora");
         }
     }
 
@@ -181,11 +218,11 @@ public class MainActivity extends AppCompatActivity {
             public void onInit(int status) {
 
                 Locale locale = new Locale("pt", "BR");
-                    voiceMic.setLanguage(locale);
-                    speak("Olá, meu nome é Nilees, sua nova assistente de voz. Pressione o botãi inferior direito e diga Oi para mais informações. Pressione o Botão central para ouvir as instruções");
+                voiceMic.setLanguage(locale);
+                speak("Olá, meu nome é Nilees, sua nova assistente de voz. Pressione o botãi inferior direito e diga Oi para mais informações. Pressione o Botão central para ouvir as instruções");
 
-                    btnCentral = (Button)findViewById(R.id.centralBtn);
-                    btnCentral.setOnClickListener(new View.OnClickListener() {
+                btnCentral = (Button) findViewById(R.id.centralBtn);
+                btnCentral.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         speak("Olá ! Meu nome é Nilles, estou aqui para mostar como a aplicação funciona, aqui você está na tela de menu.");
@@ -196,18 +233,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void speak(String message) {
-        if(Build.VERSION.SDK_INT >= 21) {
+        if (Build.VERSION.SDK_INT >= 21) {
             voiceMic.speak(message, TextToSpeech.QUEUE_FLUSH, null, null);
         } else {
             voiceMic.speak(message, TextToSpeech.QUEUE_FLUSH, null);
         }
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        voiceMic.shutdown();
-    }
 
     private final Runnable mRunnable = new Runnable() {
         @Override
@@ -216,11 +248,6 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (mHandler != null) { mHandler.removeCallbacks(mRunnable); }
-    }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
