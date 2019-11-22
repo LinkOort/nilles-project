@@ -250,5 +250,5 @@ public class GpsAct extends AppCompatActivity {
         Toast.makeText(this, "Pressione Duas Vezes para sair da aplicação", Toast.LENGTH_SHORT).show();
         mHandler.postDelayed(mRunnable, 2000);
     }
-
+//https://www.youtube.com/watch?v=xB7ZluJ7ayY
 }
