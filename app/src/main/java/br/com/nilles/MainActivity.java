@@ -14,10 +14,12 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
+import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.format.DateUtils;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -25,6 +27,7 @@ import android.widget.Toast;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnCentral;
     private Locale locale;
     private Locale localel;
+    private GestureDetectorCompat gesture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         localel = new Locale("pt", "BR");
+
+        gesture = new GestureDetectorCompat(this, new LearnGesture());
 
 
         //peço permissão para que o microfone seja utilizado
@@ -74,39 +80,37 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        //aqui é onde as TABS são feitas
-        tabLayout = (TabLayout) findViewById(R.id.tabBar);
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
-
-        tabLayout.addTab(tabLayout.newTab().setText("Menu").setTag("tab1"));
-        tabLayout.addTab(tabLayout.newTab().setText("GPS").setTag("tab2"));
-        tabLayout.addTab(tabLayout.newTab().setText("Suporte").setTag("tab3"));
-        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-
-        final MyAdapter adapter = new MyAdapter(this, getSupportFragmentManager(), tabLayout.getTabCount());
-        viewPager.setAdapter(adapter);
-
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-
         initializeTextToSpeech();
         initializeSpeechRecognizer();
+    }
+
+    public boolean onTouchEvent(MotionEvent event) {
+        this.gesture.onTouchEvent(event);
+        return super.onTouchEvent(event);
+    }
+
+    class LearnGesture extends GestureDetector.SimpleOnGestureListener {
+
+        @Override
+        public boolean onFling(MotionEvent event1, MotionEvent event2, float vX, float vY) {
+
+            float sense = 50;
+
+            if(event2.getX() - event1.getX() > sense){
+
+                Intent intent = new Intent(getApplicationContext(), GpsAct.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.anim_rigth, R.anim.anim_slide_out_torigth);
+
+            } else if(event1.getX() - event2.getX() > sense){
+
+                Intent intent = new Intent(getApplicationContext(), SupportAct.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.anim_left, R.anim.anim_slide_out_toleft);
+            }
+            return true;
+        }
+
     }
 
 
@@ -129,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         if (mHandler != null) {
             mHandler.removeCallbacks(mRunnable);
+            voiceMic.shutdown();
         }
     }
 
@@ -193,9 +198,6 @@ public class MainActivity extends AppCompatActivity {
         locale = new Locale("pt", "BR");
         command = command.toLowerCase(localel);
 
-        if (command.indexOf("oi") != -1) {
-            speak("Meu nome é Nilees.");
-        }
         if (command.indexOf("olá") != -1) {
             speak("Eu sou Nilees, sua nova assistente de voz, como posso lhe ajudar?");
         }
@@ -210,6 +212,17 @@ public class MainActivity extends AppCompatActivity {
         if (command.indexOf("tempo") != -1) {
             speak("O tempo agora");
         }
+        if (command.indexOf("mapa") != -1) {
+            Intent intentMapa0 = new Intent(getApplicationContext(), GpsAct.class);
+            intentMapa0.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intentMapa0);
+        }
+        if (command.indexOf("suporte") != -1) {
+            Intent intentSuporte0 = new Intent(getApplicationContext(), SupportAct.class);
+            intentSuporte0.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intentSuporte0);
+
+        }
     }
 
     private void initializeTextToSpeech() {
@@ -219,15 +232,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Locale locale = new Locale("pt", "BR");
                 voiceMic.setLanguage(locale);
-                speak("Olá, meu nome é Nilees, sua nova assistente de voz. Pressione o botãi inferior direito e diga Oi para mais informações. Pressione o Botão central para ouvir as instruções");
-
-                btnCentral = (Button) findViewById(R.id.centralBtn);
-                btnCentral.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        speak("Olá ! Meu nome é Nilles, estou aqui para mostar como a aplicação funciona, aqui você está na tela de menu.");
-                    }
-                });
+                speak("Olá, meu nome é Nilees. Pressione o botãi inferior direito e diga Oi para mais informações. Pressione o Botão central para ouvir as instruções");
             }
         });
     }
@@ -240,7 +245,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     private final Runnable mRunnable = new Runnable() {
         @Override
         public void run() {
@@ -248,17 +252,17 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
             finishAffinity();
         }
-
         this.doubleBackToExitPressedOnce = true;
         Toast.makeText(this, "Pressione Duas Vezes para sair da aplicação", Toast.LENGTH_SHORT).show();
         mHandler.postDelayed(mRunnable, 2000);
     }
-
 }
+
+
+

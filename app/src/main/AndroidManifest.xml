@@ -18,6 +18,7 @@
         </activity>
         <activity
             android:name=".BluetoothAct"
+            android:theme="@style/MenuAct"
             android:screenOrientation="portrait"/>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -29,9 +30,11 @@
         -->
         <activity
             android:name=".SupportAct"
+            android:theme="@style/MenuAct"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".GpsAct"
+            android:theme="@style/MenuAct"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".HomeAct"
