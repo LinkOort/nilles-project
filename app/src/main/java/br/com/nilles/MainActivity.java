@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
     private boolean doubleBackToExitPressedOnce;
     private Handler mHandler = new Handler();
     private static final int REQUEST_MICROPHONE = 100;
-    private TabLayout tabLayout;
     private TextToSpeech voiceMic;
     private SpeechRecognizer speechRec;
     private Bundle bundle;
@@ -94,23 +93,22 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean onFling(MotionEvent event1, MotionEvent event2, float vX, float vY) {
 
-            float sense = 50;
+            float sense = 60;
 
             if(event2.getX() - event1.getX() > sense){
 
-                Intent intent = new Intent(getApplicationContext(), GpsAct.class);
+                Intent intent = new Intent(getApplicationContext(), SupportAct.class);
                 startActivity(intent);
-                overridePendingTransition(R.anim.anim_rigth, R.anim.anim_slide_out_torigth);
+                overridePendingTransition(R.anim.anim_left, R.anim.anim_slide_out_torigth);
 
             } else if(event1.getX() - event2.getX() > sense){
 
-                Intent intent = new Intent(getApplicationContext(), SupportAct.class);
+                Intent intent = new Intent(getApplicationContext(), GpsAct.class);
                 startActivity(intent);
-                overridePendingTransition(R.anim.anim_left, R.anim.anim_slide_out_toleft);
+                overridePendingTransition(R.anim.anim_rigth, R.anim.anim_slide_out_toleft);
             }
             return true;
         }
-
     }
 
 

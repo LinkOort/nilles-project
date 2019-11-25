@@ -12,14 +12,10 @@ import android.speech.SpeechRecognizer;
 import android.speech.tts.TextToSpeech;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateUtils;
 import android.view.GestureDetector;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +41,6 @@ public class GpsAct extends AppCompatActivity {
     private SpeechRecognizer speechRec;
     private Locale localel;
     private Handler mHandler = new Handler();
-    private static final int REQUEST_MICROPHONE = 100;
     private GestureDetectorCompat gesture;
 
     @Override
@@ -86,19 +81,19 @@ public class GpsAct extends AppCompatActivity {
         public boolean onFling(MotionEvent event1, MotionEvent event2, float vX, float vY) {
 
 
-            float sense = 50;
+            float sense = 60;
 
             if(event2.getX() - event1.getX() > sense){
 
-                Intent intent = new Intent(getApplicationContext(), SupportAct.class);
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
-                overridePendingTransition(R.anim.anim_rigth, R.anim.anim_slide_out_torigth);
+                overridePendingTransition(R.anim.anim_left, R.anim.anim_slide_out_torigth);
 
             } else if(event1.getX() - event2.getX() > sense){
 
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(), SupportAct.class);
                 startActivity(intent);
-                overridePendingTransition(R.anim.anim_left, R.anim.anim_slide_out_toleft);
+                overridePendingTransition(R.anim.anim_rigth, R.anim.anim_slide_out_toleft);
 
             }
             return true;
