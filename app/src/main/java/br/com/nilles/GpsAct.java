@@ -12,6 +12,7 @@ import android.speech.SpeechRecognizer;
 import android.speech.tts.TextToSpeech;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateUtils;
@@ -33,7 +34,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class GpsAct extends AppCompatActivity {
+public class GpsAct extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener {
 
     private boolean doubleBackToExitPressedOnce;
     private TextToSpeech voiceMic;
@@ -42,6 +43,7 @@ public class GpsAct extends AppCompatActivity {
     private Locale localel;
     private Handler mHandler = new Handler();
     private GestureDetectorCompat gesture;
+    private GoogleMap mMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,14 +77,23 @@ public class GpsAct extends AppCompatActivity {
         return super.onTouchEvent(event);
     }
 
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap =  googleMap;
+        mMap.setOnMapClickListener(this);
+    }
+
+    @Override
+    public void onMapClick(LatLng latLng) {
+
+    }
+
     class LearnGesture extends GestureDetector.SimpleOnGestureListener {
 
         @Override
         public boolean onFling(MotionEvent event1, MotionEvent event2, float vX, float vY) {
 
-
             float sense = 60;
-
             if(event2.getX() - event1.getX() > sense){
 
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -98,7 +109,6 @@ public class GpsAct extends AppCompatActivity {
             }
             return true;
         }
-
     }
 
     @Override
@@ -107,7 +117,6 @@ public class GpsAct extends AppCompatActivity {
         voiceMic.shutdown();
     }
 
-    //quando a aplicação é "minimizada" com este método as ações de inicializar o reconhecimento de voz e texto serão reativadas
     @Override
     protected void onResume() {
         initializeSpeechRecognizer();
@@ -125,7 +134,6 @@ public class GpsAct extends AppCompatActivity {
     }
 
     private void initializeSpeechRecognizer() {
-        //aqui é confirmado se o microfone está disponível para que o reconhecimento comece
         if (SpeechRecognizer.isRecognitionAvailable(this)) {
             speechRec = SpeechRecognizer.createSpeechRecognizer(this);
             speechRec.setRecognitionListener(new RecognitionListener() {
@@ -178,8 +186,6 @@ public class GpsAct extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     private void finalResults(String command) {
 
-        //aqui no método é instanciado algumas funções de voz da aplicação (pretendo aprimorar depois e trocar os "if" por switch case)
-
         Locale locale = new Locale("pt", "BR");
         command = command.toLowerCase(localel);
 
@@ -225,14 +231,12 @@ public class GpsAct extends AppCompatActivity {
         }
     }
 
-
     private final Runnable mRunnable = new Runnable() {
         @Override
         public void run() {
             doubleBackToExitPressedOnce = false;
         }
     };
-
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
@@ -245,5 +249,6 @@ public class GpsAct extends AppCompatActivity {
         Toast.makeText(this, "Pressione Duas Vezes para sair da aplicação", Toast.LENGTH_SHORT).show();
         mHandler.postDelayed(mRunnable, 2000);
     }
-//https://www.youtube.com/watch?v=xB7ZluJ7ayY
+
+//https://medium.com/@trientran/android-working-with-google-maps-and-directions-api-44765433f19
 }
