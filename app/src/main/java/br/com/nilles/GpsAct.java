@@ -93,7 +93,7 @@ public class GpsAct extends FragmentActivity implements OnMapReadyCallback, Goog
         @Override
         public boolean onFling(MotionEvent event1, MotionEvent event2, float vX, float vY) {
 
-            float sense = 60;
+            float sense = 195;
             if(event2.getX() - event1.getX() > sense){
 
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -161,14 +161,12 @@ public class GpsAct extends FragmentActivity implements OnMapReadyCallback, Goog
                 public void onError(int error) {
                 }
 
-                //aqui é onde irémos pegar o resultado do que foi falado pelo usuário
                 @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
                 @Override
                 public void onResults(Bundle bundle) {
                     List<String> results = bundle.getStringArrayList(
                             SpeechRecognizer.RESULTS_RECOGNITION
                     );
-                    //metodo finalResults é chamado aqui
                     finalResults(results.get(0));
                 }
 
@@ -189,14 +187,6 @@ public class GpsAct extends FragmentActivity implements OnMapReadyCallback, Goog
         Locale locale = new Locale("pt", "BR");
         command = command.toLowerCase(localel);
 
-        if (command.indexOf("olá") != -1) {
-             speak("Eu sou Nilees, sua nova assistente de voz, como posso lhe ajudar?");
-        }
-        if (command.indexOf("que horas são") != -1) {
-            Date now = new Date();
-            String time = DateUtils.formatDateTime(this, now.getTime(), DateUtils.FORMAT_SHOW_TIME);
-            speak("Agora são exatas:" + time);
-        }
         if (command.indexOf("sair") != -1) {
             finishAffinity();
         }
@@ -204,11 +194,13 @@ public class GpsAct extends FragmentActivity implements OnMapReadyCallback, Goog
             Intent intentMenu2 = new Intent(getApplicationContext(), MainActivity.class);
             intentMenu2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intentMenu2);
+            overridePendingTransition(R.anim.anim_left, R.anim.anim_slide_out_torigth);
         }
         if (command.indexOf("suporte") != -1) {
             Intent intentSuporte2 = new Intent(getApplicationContext(), SupportAct.class);
             intentSuporte2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intentSuporte2);
+            overridePendingTransition(R.anim.anim_rigth, R.anim.anim_slide_out_toleft);
         }
     }
 
@@ -218,7 +210,7 @@ public class GpsAct extends FragmentActivity implements OnMapReadyCallback, Goog
             public void onInit(int status) {
                 Locale locale = new Locale("pt", "BR");
                 voiceMic.setLanguage(locale);
-                speak("Olá, meu nome é Nilees. Aqui você na janela do GPS, pressione o botão de aúdio e diga uma localização que gostaria de ir. Aperte o botão inferior direito e diga 'Menu' para acessar a tela inicial, ou diga 'suporte' para acessar a tela de configurações");
+                speak("aqui você na janela do GPS. pressione o botão de aúdio no canto inferior direito e diga uma localização que gostaria de ir.");
             }
         });
     }

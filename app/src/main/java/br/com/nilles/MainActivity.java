@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
 
         gesture = new GestureDetectorCompat(this, new LearnGesture());
 
-
         //peço permissão para que o microfone seja utilizado
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -93,8 +92,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean onFling(MotionEvent event1, MotionEvent event2, float vX, float vY) {
 
-            float sense = 60;
-
+            float sense = 195;
             if(event2.getX() - event1.getX() > sense){
 
                 Intent intent = new Intent(getApplicationContext(), SupportAct.class);
@@ -214,11 +212,13 @@ public class MainActivity extends AppCompatActivity {
             Intent intentMapa0 = new Intent(getApplicationContext(), GpsAct.class);
             intentMapa0.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intentMapa0);
+            overridePendingTransition(R.anim.anim_rigth, R.anim.anim_slide_out_toleft);
         }
         if (command.indexOf("suporte") != -1) {
             Intent intentSuporte0 = new Intent(getApplicationContext(), SupportAct.class);
             intentSuporte0.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intentSuporte0);
+            overridePendingTransition(R.anim.anim_left, R.anim.anim_slide_out_torigth);
 
         }
     }
@@ -261,6 +261,3 @@ public class MainActivity extends AppCompatActivity {
         mHandler.postDelayed(mRunnable, 2000);
     }
 }
-
-
-
