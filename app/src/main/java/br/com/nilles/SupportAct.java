@@ -51,7 +51,7 @@ public class SupportAct extends AppCompatActivity {
         });
 
         localel = new Locale("pt", "BR");
-        gesture = new GestureDetectorCompat(this, new LearnGesture());
+        //gesture = new GestureDetectorCompat(this, new LearnGesture());
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
 
@@ -69,12 +69,12 @@ public class SupportAct extends AppCompatActivity {
         initializeSpeechRecognizer();
     }
 
-    public boolean onTouchEvent(MotionEvent event) {
+    /*public boolean onTouchEvent(MotionEvent event) {
         this.gesture.onTouchEvent(event);
         return super.onTouchEvent(event);
-    }
+    }*/
 
-    class LearnGesture extends GestureDetector.SimpleOnGestureListener {
+    /*class LearnGesture extends GestureDetector.SimpleOnGestureListener {
 
         @Override
         public boolean onFling(MotionEvent event1, MotionEvent event2, float vX, float vY) {
@@ -94,7 +94,7 @@ public class SupportAct extends AppCompatActivity {
             }
             return true;
         }
-    }
+    }*/
 
     @Override
     protected void onPause() {
@@ -194,7 +194,7 @@ public class SupportAct extends AppCompatActivity {
 
                 Locale locale = new Locale("pt", "BR");
                 voiceMic.setLanguage(locale);
-                speak("está é a janela de suporte, aqui você consegue ativar o bluetooth. pressione o botão de aúdio no canto inferior direito do seu celular. diga 'menu' ou 'mapa' para ir para as respectivas telas");
+                speak("Olá, esta é a janela de suporte, aqui você consegue ativar o bluetooth. pressione o botão de aúdio no canto inferior direito do seu celular. diga 'menu' ou 'mapa' para ir para as respectivas telas. Ou diga 'sair' para finalizar a aplicação");
             }
         });
     }

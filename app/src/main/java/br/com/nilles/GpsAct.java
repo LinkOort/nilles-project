@@ -52,8 +52,7 @@ public class GpsAct extends FragmentActivity implements OnMapReadyCallback, Goog
 
 
         localel = new Locale("pt", "BR");
-
-        gesture = new GestureDetectorCompat(this, new LearnGesture());
+        //gesture = new GestureDetectorCompat(this, new LearnGesture());
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -72,10 +71,10 @@ public class GpsAct extends FragmentActivity implements OnMapReadyCallback, Goog
         initializeSpeechRecognizer();
     }
 
-    public boolean onTouchEvent(MotionEvent event) {
+    /*public boolean onTouchEvent(MotionEvent event) {
         this.gesture.onTouchEvent(event);
         return super.onTouchEvent(event);
-    }
+    }*/
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -88,7 +87,7 @@ public class GpsAct extends FragmentActivity implements OnMapReadyCallback, Goog
 
     }
 
-    class LearnGesture extends GestureDetector.SimpleOnGestureListener {
+    /*class LearnGesture extends GestureDetector.SimpleOnGestureListener {
 
         @Override
         public boolean onFling(MotionEvent event1, MotionEvent event2, float vX, float vY) {
@@ -109,7 +108,7 @@ public class GpsAct extends FragmentActivity implements OnMapReadyCallback, Goog
             }
             return true;
         }
-    }
+    }*/
 
     @Override
     protected void onPause() {
@@ -210,7 +209,7 @@ public class GpsAct extends FragmentActivity implements OnMapReadyCallback, Goog
             public void onInit(int status) {
                 Locale locale = new Locale("pt", "BR");
                 voiceMic.setLanguage(locale);
-                speak("aqui você na janela do GPS. pressione o botão de aúdio no canto inferior direito e diga uma localização que gostaria de ir.");
+                speak("Olá, esta é a janela do GPS. pressione o botão de aúdio localizado no canto inferior direito e diga uma localização que gostaria de ir. Diga 'Menu' ou 'Suporte' para ir as respectivas telas. Ou diga 'sair' para finalizar a aplicação");
             }
         });
     }

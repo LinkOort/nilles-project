@@ -49,9 +49,8 @@ public class MainActivity extends AppCompatActivity {
 
         localel = new Locale("pt", "BR");
 
-        gesture = new GestureDetectorCompat(this, new LearnGesture());
+        //gesture = new GestureDetectorCompat(this, new LearnGesture());
 
-        //peço permissão para que o microfone seja utilizado
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
                 != PackageManager.PERMISSION_GRANTED) {
 
@@ -82,12 +81,12 @@ public class MainActivity extends AppCompatActivity {
         initializeSpeechRecognizer();
     }
 
-    public boolean onTouchEvent(MotionEvent event) {
+    /*public boolean onTouchEvent(MotionEvent event) {
         this.gesture.onTouchEvent(event);
         return super.onTouchEvent(event);
-    }
+    }*/
 
-    class LearnGesture extends GestureDetector.SimpleOnGestureListener {
+    /*class LearnGesture extends GestureDetector.SimpleOnGestureListener {
 
         @Override
         public boolean onFling(MotionEvent event1, MotionEvent event2, float vX, float vY) {
@@ -107,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         }
-    }
+    }*/
 
 
     @Override
@@ -195,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
         command = command.toLowerCase(localel);
 
         if (command.indexOf("olá") != -1) {
-            speak("Eu sou Nilees, sua nova assistente de voz, como posso lhe ajudar?");
+            speak("Esta é a tela inicial da aplicação. Pressione o botão de aúdio localizado no canto inferior direito e diga 'Mapa' ou 'Suporte' para ir as respectivas telas. Ou diga 'sair' para finalizar a aplicação");
         }
         if (command.indexOf("que horas são") != -1) {
             Date now = new Date();
@@ -230,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Locale locale = new Locale("pt", "BR");
                 voiceMic.setLanguage(locale);
-                speak("Olá, meu nome é Nilees. Pressione o botãi inferior direito e diga Oi para mais informações. Pressione o Botão central para ouvir as instruções");
+                speak("Olá, meu nome é Nilees. Pressione o botão de aúdio localizado no canto inferior direito e diga 'Olá' para mais informações.");
             }
         });
     }
