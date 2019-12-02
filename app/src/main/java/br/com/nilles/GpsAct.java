@@ -15,11 +15,9 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.text.format.DateUtils;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -38,11 +36,10 @@ public class GpsAct extends FragmentActivity implements OnMapReadyCallback, Goog
 
     private boolean doubleBackToExitPressedOnce;
     private TextToSpeech voiceMic;
-    private Button button;
     private SpeechRecognizer speechRec;
-    private Locale localel;
+    private Locale locale;
     private Handler mHandler = new Handler();
-    private GestureDetectorCompat gesture;
+    //private GestureDetectorCompat gesture;
     private GoogleMap mMap;
 
     @Override
@@ -50,20 +47,19 @@ public class GpsAct extends FragmentActivity implements OnMapReadyCallback, Goog
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gps_frag);
 
+        locale = new Locale("pt", "BR");
 
-        localel = new Locale("pt", "BR");
         //gesture = new GestureDetectorCompat(this, new LearnGesture());
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-                intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 2);
-                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, localel);
-                speechRec.startListening(intent);
+                Intent speechIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                speechIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                speechIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 2);
+                speechIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, locale);
+                speechRec.startListening(speechIntent);
             }
         });
 
@@ -183,8 +179,7 @@ public class GpsAct extends FragmentActivity implements OnMapReadyCallback, Goog
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     private void finalResults(String command) {
 
-        Locale locale = new Locale("pt", "BR");
-        command = command.toLowerCase(localel);
+        command.toLowerCase(locale);
 
         if (command.indexOf("sair") != -1) {
             finishAffinity();
@@ -207,7 +202,6 @@ public class GpsAct extends FragmentActivity implements OnMapReadyCallback, Goog
         voiceMic = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
-                Locale locale = new Locale("pt", "BR");
                 voiceMic.setLanguage(locale);
                 speak("Olá, esta é a janela do GPS. pressione o botão de aúdio localizado no canto inferior direito e diga uma localização que gostaria de ir. Diga 'Menu' ou 'Suporte' para ir as respectivas telas. Ou diga 'sair' para finalizar a aplicação");
             }
@@ -240,6 +234,4 @@ public class GpsAct extends FragmentActivity implements OnMapReadyCallback, Goog
         Toast.makeText(this, "Pressione Duas Vezes para sair da aplicação", Toast.LENGTH_SHORT).show();
         mHandler.postDelayed(mRunnable, 2000);
     }
-
-//https://medium.com/@trientran/android-working-with-google-maps-and-directions-api-44765433f19
 }

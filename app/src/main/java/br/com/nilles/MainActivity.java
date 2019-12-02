@@ -36,18 +36,16 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_MICROPHONE = 100;
     private TextToSpeech voiceMic;
     private SpeechRecognizer speechRec;
-    private Bundle bundle;
-    private Button btnCentral;
     private Locale locale;
-    private Locale localel;
-    private GestureDetectorCompat gesture;
+    //private GestureDetectorCompat gesture;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        localel = new Locale("pt", "BR");
+        locale = new Locale("pt", "BR");
 
         //gesture = new GestureDetectorCompat(this, new LearnGesture());
 
@@ -59,23 +57,19 @@ public class MainActivity extends AppCompatActivity {
                     REQUEST_MICROPHONE);
         }
 
-
-        //instancio o FAB para que ele seja utilizado
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
 
-                //Aqui é colocado o intente para que seja reconhecido a ação de voz
-                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-                intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 2);
-                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, localel);
-                speechRec.startListening(intent);
+                Intent speechIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                speechIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                speechIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 2);
+                speechIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, locale);
+                speechRec.startListening(speechIntent);
             }
         });
-
 
         initializeTextToSpeech();
         initializeSpeechRecognizer();
@@ -115,7 +109,6 @@ public class MainActivity extends AppCompatActivity {
         voiceMic.shutdown();
     }
 
-    //quando a aplicação é "minimizada" com este método as ações de inicializar o reconhecimento de voz e texto serão reativadas
     @Override
     protected void onResume() {
         initializeSpeechRecognizer();
@@ -132,10 +125,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-    //aqui o método de reconhecimento da fala (pelo botão) é criado
     private void initializeSpeechRecognizer() {
-        //aqui é confirmado se o microfone está disponível para que o reconhecimento comece
         if (SpeechRecognizer.isRecognitionAvailable(this)) {
             speechRec = SpeechRecognizer.createSpeechRecognizer(this);
             speechRec.setRecognitionListener(new RecognitionListener() {
@@ -163,14 +153,12 @@ public class MainActivity extends AppCompatActivity {
                 public void onError(int error) {
                 }
 
-                //aqui é onde irémos pegar o resultado do que foi falado pelo usuário
                 @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
                 @Override
                 public void onResults(Bundle bundle) {
                     List<String> results = bundle.getStringArrayList(
                             SpeechRecognizer.RESULTS_RECOGNITION
                     );
-                    //metodo finalResults é chamado aqui
                     finalResults(results.get(0));
                 }
 
@@ -188,46 +176,35 @@ public class MainActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     private void finalResults(String command) {
 
-        //aqui no método é instanciado algumas funções de voz da aplicação (pretendo aprimorar depois e trocar os "if" por switch case)
-
-        locale = new Locale("pt", "BR");
-        command = command.toLowerCase(localel);
+        command.toLowerCase(locale);
 
         if (command.indexOf("olá") != -1) {
             speak("Esta é a tela inicial da aplicação. Pressione o botão de aúdio localizado no canto inferior direito e diga 'Mapa' ou 'Suporte' para ir as respectivas telas. Ou diga 'sair' para finalizar a aplicação");
-        }
-        if (command.indexOf("que horas são") != -1) {
+        } else if (command.indexOf("que horas são") != -1) {
             Date now = new Date();
             String time = DateUtils.formatDateTime(this, now.getTime(), DateUtils.FORMAT_SHOW_TIME);
             speak("Agora são exatas:" + time);
-        }
-        if (command.indexOf("sair") != -1) {
+        } else if (command.indexOf("sair") != -1) {
             finishAffinity();
-        }
-        if (command.indexOf("tempo") != -1) {
+        } else if (command.indexOf("tempo") != -1) {
             speak("O tempo agora");
-        }
-        if (command.indexOf("mapa") != -1) {
+        } else if (command.indexOf("mapa") != -1) {
             Intent intentMapa0 = new Intent(getApplicationContext(), GpsAct.class);
             intentMapa0.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intentMapa0);
             overridePendingTransition(R.anim.anim_rigth, R.anim.anim_slide_out_toleft);
-        }
-        if (command.indexOf("suporte") != -1) {
+        } else if (command.indexOf("suporte") != -1) {
             Intent intentSuporte0 = new Intent(getApplicationContext(), SupportAct.class);
             intentSuporte0.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intentSuporte0);
             overridePendingTransition(R.anim.anim_left, R.anim.anim_slide_out_torigth);
-
         }
     }
 
     private void initializeTextToSpeech() {
-        voiceMic = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+        voiceMic = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
-
-                Locale locale = new Locale("pt", "BR");
                 voiceMic.setLanguage(locale);
                 speak("Olá, meu nome é Nilees. Pressione o botão de aúdio localizado no canto inferior direito e diga 'Olá' para mais informações.");
             }

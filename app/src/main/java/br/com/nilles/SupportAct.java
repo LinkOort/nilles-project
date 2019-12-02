@@ -21,7 +21,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -32,14 +31,16 @@ public class SupportAct extends AppCompatActivity {
     private TextToSpeech voiceMic;
     private Button button;
     private SpeechRecognizer speechRec;
-    private Locale localel;
+    private Locale locale;
     private Handler mHandler = new Handler();
-    private GestureDetectorCompat gesture;
+    //private GestureDetectorCompat gesture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.support_frag);
+
+        locale = new Locale("pt", "BR");
 
         button = (Button)findViewById(R.id.btnBluetooth);
         button.setOnClickListener(new View.OnClickListener() {
@@ -50,7 +51,6 @@ public class SupportAct extends AppCompatActivity {
             }
         });
 
-        localel = new Locale("pt", "BR");
         //gesture = new GestureDetectorCompat(this, new LearnGesture());
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -60,7 +60,7 @@ public class SupportAct extends AppCompatActivity {
                 Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
                 intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
                 intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 2);
-                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, localel);
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, locale);
                 speechRec.startListening(intent);
             }
         });
@@ -169,7 +169,7 @@ public class SupportAct extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     private void finalResults(String command) {
 
-        command = command.toLowerCase(localel);
+        command.toLowerCase(locale);
 
         if (command.indexOf("sair") != -1) {
             finishAffinity();
@@ -191,8 +191,6 @@ public class SupportAct extends AppCompatActivity {
         voiceMic = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
-
-                Locale locale = new Locale("pt", "BR");
                 voiceMic.setLanguage(locale);
                 speak("Olá, esta é a janela de suporte, aqui você consegue ativar o bluetooth. pressione o botão de aúdio no canto inferior direito do seu celular. diga 'menu' ou 'mapa' para ir para as respectivas telas. Ou diga 'sair' para finalizar a aplicação");
             }
