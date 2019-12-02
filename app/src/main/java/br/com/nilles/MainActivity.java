@@ -11,7 +11,6 @@ import android.speech.SpeechRecognizer;
 import android.speech.tts.TextToSpeech;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GestureDetectorCompat;
@@ -21,13 +20,11 @@ import android.text.format.DateUtils;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,8 +34,8 @@ public class MainActivity extends AppCompatActivity {
     private TextToSpeech voiceMic;
     private SpeechRecognizer speechRec;
     private Locale locale;
+    private FloatingActionButton fab;
     //private GestureDetectorCompat gesture;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         locale = new Locale("pt", "BR");
-
         //gesture = new GestureDetectorCompat(this, new LearnGesture());
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
@@ -57,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
                     REQUEST_MICROPHONE);
         }
 
-        FloatingActionButton fab = findViewById(R.id.fab);
+        fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -85,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean onFling(MotionEvent event1, MotionEvent event2, float vX, float vY) {
 
-            float sense = 195;
+            private float sense = 195;
             if(event2.getX() - event1.getX() > sense){
 
                 Intent intent = new Intent(getApplicationContext(), SupportAct.class);
@@ -105,8 +101,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
-        super.onPause();
         voiceMic.shutdown();
+        super.onPause();
     }
 
     @Override
@@ -118,10 +114,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         if (mHandler != null) {
             mHandler.removeCallbacks(mRunnable);
             voiceMic.shutdown();
+            super.onDestroy();
         }
     }
 
@@ -182,21 +178,21 @@ public class MainActivity extends AppCompatActivity {
             speak("Esta é a tela inicial da aplicação. Pressione o botão de aúdio localizado no canto inferior direito e diga 'Mapa' ou 'Suporte' para ir as respectivas telas. Ou diga 'sair' para finalizar a aplicação");
         } else if (command.indexOf("que horas são") != -1) {
             Date now = new Date();
-            String time = DateUtils.formatDateTime(this, now.getTime(), DateUtils.FORMAT_SHOW_TIME);
+            String time = DateUtils.formatDateTime(getApplicationContext(), now.getTime(), DateUtils.FORMAT_SHOW_TIME);
             speak("Agora são exatas:" + time);
         } else if (command.indexOf("sair") != -1) {
             finishAffinity();
         } else if (command.indexOf("tempo") != -1) {
             speak("O tempo agora");
         } else if (command.indexOf("mapa") != -1) {
-            Intent intentMapa0 = new Intent(getApplicationContext(), GpsAct.class);
-            intentMapa0.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intentMapa0);
+            Intent intentMap = new Intent(getApplicationContext(), GpsAct.class);
+            intentMap.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intentMap);
             overridePendingTransition(R.anim.anim_rigth, R.anim.anim_slide_out_toleft);
         } else if (command.indexOf("suporte") != -1) {
-            Intent intentSuporte0 = new Intent(getApplicationContext(), SupportAct.class);
-            intentSuporte0.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intentSuporte0);
+            Intent intentSupport = new Intent(getApplicationContext(), SupportAct.class);
+            intentSupport.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intentSupport);
             overridePendingTransition(R.anim.anim_left, R.anim.anim_slide_out_torigth);
         }
     }

@@ -1,8 +1,6 @@
 package br.com.nilles;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,16 +15,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.List;
 import java.util.Locale;
 
-
 public class SupportAct extends AppCompatActivity {
 
+    private FloatingActionButton fab;
     private boolean doubleBackToExitPressedOnce;
     private TextToSpeech voiceMic;
     private Button button;
@@ -52,7 +49,7 @@ public class SupportAct extends AppCompatActivity {
         });
 
         //gesture = new GestureDetectorCompat(this, new LearnGesture());
-        FloatingActionButton fab = findViewById(R.id.fab);
+        fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -72,14 +69,12 @@ public class SupportAct extends AppCompatActivity {
     /*public boolean onTouchEvent(MotionEvent event) {
         this.gesture.onTouchEvent(event);
         return super.onTouchEvent(event);
-    }*/
-
-    /*class LearnGesture extends GestureDetector.SimpleOnGestureListener {
+    } class LearnGesture extends GestureDetector.SimpleOnGestureListener {
 
         @Override
         public boolean onFling(MotionEvent event1, MotionEvent event2, float vX, float vY) {
 
-            float sense = 195;
+            private float sense = 195;
             if(event2.getX() - event1.getX() > sense){
 
                 Intent intent = new Intent(getApplicationContext(), GpsAct.class);
@@ -119,7 +114,7 @@ public class SupportAct extends AppCompatActivity {
     }
 
     private void initializeSpeechRecognizer() {
-        if (SpeechRecognizer.isRecognitionAvailable(this)) {
+        if (SpeechRecognizer.isRecognitionAvailable(getApplicationContext())) {
             speechRec = SpeechRecognizer.createSpeechRecognizer(this);
             speechRec.setRecognitionListener(new RecognitionListener() {
                 @Override
@@ -173,22 +168,22 @@ public class SupportAct extends AppCompatActivity {
 
         if (command.indexOf("sair") != -1) {
             finishAffinity();
-        } if (command.indexOf("mapa") != -1) {
-            Intent intentMapa1 = new Intent(getApplicationContext(), GpsAct.class);
-            intentMapa1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intentMapa1);
+        } else if (command.indexOf("mapa") != -1) {
+            Intent intentMap = new Intent(getApplicationContext(), GpsAct.class);
+            intentMap.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intentMap);
             overridePendingTransition(R.anim.anim_left, R.anim.anim_slide_out_torigth);
 
-        } if (command.indexOf("menu") != -1) {
-            Intent intentMenu1 = new Intent(getApplicationContext(), MainActivity.class);
-            intentMenu1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intentMenu1);
+        } else if (command.indexOf("menu") != -1) {
+            Intent intentMenu = new Intent(getApplicationContext(), MainActivity.class);
+            intentMenu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intentMenu);
             overridePendingTransition(R.anim.anim_rigth, R.anim.anim_slide_out_toleft);
         }
     }
 
     private void initializeTextToSpeech() {
-        voiceMic = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+        voiceMic = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
                 voiceMic.setLanguage(locale);

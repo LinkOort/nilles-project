@@ -28,12 +28,12 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 public class GpsAct extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener {
 
+    private FloatingActionButton fab;
     private boolean doubleBackToExitPressedOnce;
     private TextToSpeech voiceMic;
     private SpeechRecognizer speechRec;
@@ -51,7 +51,7 @@ public class GpsAct extends FragmentActivity implements OnMapReadyCallback, Goog
 
         //gesture = new GestureDetectorCompat(this, new LearnGesture());
 
-        FloatingActionButton fab = findViewById(R.id.fab);
+        fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,7 +88,7 @@ public class GpsAct extends FragmentActivity implements OnMapReadyCallback, Goog
         @Override
         public boolean onFling(MotionEvent event1, MotionEvent event2, float vX, float vY) {
 
-            float sense = 195;
+            private float sense = 195;
             if(event2.getX() - event1.getX() > sense){
 
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -185,15 +185,15 @@ public class GpsAct extends FragmentActivity implements OnMapReadyCallback, Goog
             finishAffinity();
         }
         if (command.indexOf("menu") != -1) {
-            Intent intentMenu2 = new Intent(getApplicationContext(), MainActivity.class);
-            intentMenu2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intentMenu2);
+            Intent intentMenu = new Intent(getApplicationContext(), MainActivity.class);
+            intentMenu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intentMenu);
             overridePendingTransition(R.anim.anim_left, R.anim.anim_slide_out_torigth);
         }
         if (command.indexOf("suporte") != -1) {
-            Intent intentSuporte2 = new Intent(getApplicationContext(), SupportAct.class);
-            intentSuporte2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intentSuporte2);
+            Intent intentSupport = new Intent(getApplicationContext(), SupportAct.class);
+            intentSupport.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intentSupport);
             overridePendingTransition(R.anim.anim_rigth, R.anim.anim_slide_out_toleft);
         }
     }
