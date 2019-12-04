@@ -27,13 +27,15 @@ import java.util.Locale;
 public class PermissionAct extends AppCompatActivity {
 
     private Button btnAccept;
-    String prevStarted = "prevStarted";
+    private String prevStarted = "prevStarted";
     private TextToSpeech voiceMic;
     private SpeechRecognizer speechRec;
+    private Locale locale;
 
     @Override
     protected void onResume() {
         super.onResume();
+        voiceMic.shutdown();
         SharedPreferences sharedpreferences = getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE);
         if (!sharedpreferences.getBoolean(prevStarted, false)) {
             SharedPreferences.Editor editor = sharedpreferences.edit();
@@ -49,6 +51,8 @@ public class PermissionAct extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.permission_layout);
+
+        locale = new Locale("pt", "BR");
 
         btnAccept = (Button)findViewById(R.id.accept);
         btnAccept.setOnClickListener(new View.OnClickListener() {
@@ -68,10 +72,10 @@ public class PermissionAct extends AppCompatActivity {
                             public void onPermissionDenied(PermissionDeniedResponse response) {
                                 if (response.isPermanentlyDenied()){
                                     AlertDialog.Builder builder = new AlertDialog.Builder(PermissionAct.this);
-                                    builder.setTitle("Permissão Negada")
+                                    builder.setTitle("Permission Denied")
                                             .setMessage("Permissão para acessar a localização foi negada. Você necessita aceitar par utilizar aplicação")
-                                            .setNegativeButton("Cancelar",null)
-                                            .setPositiveButton("Aceitar", new DialogInterface.OnClickListener() {
+                                            .setNegativeButton("Cancel",null)
+                                            .setPositiveButton("Accept", new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int which) {
                                                     Intent intent = new Intent();
@@ -81,7 +85,7 @@ public class PermissionAct extends AppCompatActivity {
                                             })
                                             .show();
                                 } else {
-                                    Toast.makeText(PermissionAct.this,"Permissão Negada", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(),"Permission Denied", Toast.LENGTH_LONG).show();
                                 }
                             }
 
@@ -93,11 +97,11 @@ public class PermissionAct extends AppCompatActivity {
                         .check();
             }
         });
+        initializeTextToSpeech();
     }
 
-
     // devo fazer algo para que o audio fosse executado apneas uma vez
-    /*private void initializeTextToSpeech() {
+    private void initializeTextToSpeech() {
         voiceMic = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
@@ -105,7 +109,7 @@ public class PermissionAct extends AppCompatActivity {
                     Toast.makeText(PermissionAct.this, "error", Toast.LENGTH_LONG).show();
                     finish();
                 } else {
-                    voiceMic.setLanguage(Locale.US);
+                    voiceMic.setLanguage(locale);
                     speak("This screen ask to you a permission to find your location");
                 }
             }
@@ -117,7 +121,5 @@ public class PermissionAct extends AppCompatActivity {
         } else {
             voiceMic.speak(message, TextToSpeech.QUEUE_FLUSH, null);
         }
-    }*/
-
-
+    }
 }
