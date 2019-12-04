@@ -34,7 +34,7 @@ import java.util.Locale;
 public class GpsAct extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener {
 
     private FloatingActionButton fab;
-    private boolean doubleBackToExitPressedOnce;
+    private boolean doubleBackToExit;
     private TextToSpeech voiceMic;
     private SpeechRecognizer speechRec;
     private Locale locale;
@@ -48,6 +48,7 @@ public class GpsAct extends FragmentActivity implements OnMapReadyCallback, Goog
         setContentView(R.layout.gps_frag);
 
         locale = new Locale("pt", "BR");
+        voiceMic.setLanguage(locale);
 
         //gesture = new GestureDetectorCompat(this, new LearnGesture());
 
@@ -202,7 +203,6 @@ public class GpsAct extends FragmentActivity implements OnMapReadyCallback, Goog
         voiceMic = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
-                voiceMic.setLanguage(locale);
                 speak("Olá, esta é a janela do GPS. pressione o botão de aúdio localizado no canto inferior direito e diga uma localização que gostaria de ir. Diga 'Menu' ou 'Suporte' para ir as respectivas telas. Ou diga 'sair' para finalizar a aplicação");
             }
         });
@@ -219,18 +219,18 @@ public class GpsAct extends FragmentActivity implements OnMapReadyCallback, Goog
     private final Runnable mRunnable = new Runnable() {
         @Override
         public void run() {
-            doubleBackToExitPressedOnce = false;
+            doubleBackToExit = false;
         }
     };
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onBackPressed() {
-        if (doubleBackToExitPressedOnce) {
+        if (doubleBackToExit) {
             finishAffinity();
         }
 
-        this.doubleBackToExitPressedOnce = true;
+        this.doubleBackToExit = true;
         Toast.makeText(this, "Pressione Duas Vezes para sair da aplicação", Toast.LENGTH_SHORT).show();
         mHandler.postDelayed(mRunnable, 2000);
     }

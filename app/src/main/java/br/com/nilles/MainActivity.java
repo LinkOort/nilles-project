@@ -28,7 +28,7 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-    private boolean doubleBackToExitPressedOnce;
+    private boolean doubleBackToExit;
     private Handler mHandler = new Handler();
     private static final int REQUEST_MICROPHONE = 100;
     private TextToSpeech voiceMic;
@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         locale = new Locale("pt", "BR");
+        voiceMic.setLanguage(locale);
         //gesture = new GestureDetectorCompat(this, new LearnGesture());
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
@@ -200,7 +201,6 @@ public class MainActivity extends AppCompatActivity {
         voiceMic = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
-                voiceMic.setLanguage(locale);
                 speak("Olá, meu nome é Nilees. Pressione o botão de aúdio localizado no canto inferior direito e diga 'Olá' para mais informações.");
             }
         });
@@ -217,17 +217,17 @@ public class MainActivity extends AppCompatActivity {
     private final Runnable mRunnable = new Runnable() {
         @Override
         public void run() {
-            doubleBackToExitPressedOnce = false;
+            doubleBackToExit = false;
         }
     };
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onBackPressed() {
-        if (doubleBackToExitPressedOnce) {
+        if (doubleBackToExit) {
             finishAffinity();
         }
-        this.doubleBackToExitPressedOnce = true;
+        this.doubleBackToExit = true;
         Toast.makeText(this, "Pressione Duas Vezes para sair da aplicação", Toast.LENGTH_SHORT).show();
         mHandler.postDelayed(mRunnable, 2000);
     }

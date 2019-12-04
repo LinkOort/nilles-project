@@ -5,7 +5,6 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 public class SplashAct extends AppCompatActivity {
 
@@ -29,12 +28,11 @@ public class SplashAct extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
-        },// Aqui a variável é chamada
-                SPLASH_SCREEN_TIME_OUT);
+        }, SPLASH_SCREEN_TIME_OUT);
     }
 
     @Override
     public void onBackPressed() {
-        //Back Button foi desabilitado para o APP não ser finalizado na tela de Splash
+
     }
 }

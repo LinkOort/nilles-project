@@ -29,7 +29,6 @@ public class PermissionAct extends AppCompatActivity {
     private Button btnAccept;
     private String prevStarted = "prevStarted";
     private TextToSpeech voiceMic;
-    private SpeechRecognizer speechRec;
     private Locale locale;
 
     @Override
@@ -42,7 +41,7 @@ public class PermissionAct extends AppCompatActivity {
             editor.putBoolean(prevStarted, Boolean.TRUE);
             editor.apply();
         } else {
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
         }
     }
@@ -110,7 +109,7 @@ public class PermissionAct extends AppCompatActivity {
                     finish();
                 } else {
                     voiceMic.setLanguage(locale);
-                    speak("This screen ask to you a permission to find your location");
+                    speak("Olá, bem-vindo a aplicação, aceite a permissão de localização para utilizar a aplicação");
                 }
             }
         });

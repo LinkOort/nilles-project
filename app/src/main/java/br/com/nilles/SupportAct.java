@@ -24,7 +24,7 @@ import java.util.Locale;
 public class SupportAct extends AppCompatActivity {
 
     private FloatingActionButton fab;
-    private boolean doubleBackToExitPressedOnce;
+    private boolean doubleBackToExit;
     private TextToSpeech voiceMic;
     private Button button;
     private SpeechRecognizer speechRec;
@@ -38,6 +38,7 @@ public class SupportAct extends AppCompatActivity {
         setContentView(R.layout.support_frag);
 
         locale = new Locale("pt", "BR");
+        voiceMic.setLanguage(locale);
 
         button = (Button)findViewById(R.id.btnBluetooth);
         button.setOnClickListener(new View.OnClickListener() {
@@ -186,7 +187,6 @@ public class SupportAct extends AppCompatActivity {
         voiceMic = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
-                voiceMic.setLanguage(locale);
                 speak("Olá, esta é a janela de suporte, aqui você consegue ativar o bluetooth. pressione o botão de aúdio no canto inferior direito do seu celular. diga 'menu' ou 'mapa' para ir para as respectivas telas. Ou diga 'sair' para finalizar a aplicação");
             }
         });
@@ -203,18 +203,18 @@ public class SupportAct extends AppCompatActivity {
     private final Runnable mRunnable = new Runnable() {
         @Override
         public void run() {
-            doubleBackToExitPressedOnce = false;
+            doubleBackToExit = false;
         }
     };
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onBackPressed() {
-        if (doubleBackToExitPressedOnce) {
+        if (doubleBackToExit) {
             finishAffinity();
         }
 
-        this.doubleBackToExitPressedOnce = true;
+        this.doubleBackToExit = true;
         Toast.makeText(this, "Pressione Duas Vezes para sair da aplicação", Toast.LENGTH_SHORT).show();
         mHandler.postDelayed(mRunnable, 2000);
     }
